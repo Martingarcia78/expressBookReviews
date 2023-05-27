@@ -25,16 +25,21 @@ public_users.get('/isbn/:isbn',function (req, res) {
  });
   
 // Get book details based on author
-public_users.get('/m',function (req, res) {
-  const author = req.params.author;
-  keys = Object.keys(books);
-  //usar keys para iterar
-  let validbooks = books.filter((book)=>{
-    return (book[key].author === author)
+public_users.get('/author/:author',function (req, res) {
+    const author = req.params.author;
+    new_dict = [];
+    bookskeys = Object.keys(books);
+    
+    for(const key in books){
+      if(books[key].author === author){
+          new_dict.push({
+              key: key,
+              value: books[key],
+          });
+      }
+      }
+    return res.send(new_dict);
   });
-
-  return res.send(validbooks);
-});
 
 // Get all books based on title
 public_users.get('/title/:title',function (req, res) {
