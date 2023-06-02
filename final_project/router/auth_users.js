@@ -21,7 +21,7 @@ const authenticatedUser = (username,password)=>{
      return (user.username === username && user.password === password);
 });
 
-    if(authenticated_user.lenth > 0){
+    if(authenticated_user.length > 0){
         return true;
     }
     else {
@@ -54,9 +54,10 @@ regd_users.post("/login", (req,res) => {
 });
 
 // Add a book review
-regd_users.put("/auth/review/:isbn", (req, res) => {
-  //Write your code here
-  return res.status(300).json({message: "Yet to be implemented"});
+regd_users.get("/auth/review/:isbn", (req, res) => {
+  let um = req.session.authorization.username;
+
+  return res.status(300).json({message: `Yet to be implemented`});
 });
 
 module.exports.authenticated = regd_users;
