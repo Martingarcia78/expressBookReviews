@@ -55,7 +55,19 @@ regd_users.post("/login", (req,res) => {
 
 // Add a book review
 regd_users.get("/auth/review/:isbn", (req, res) => {
-  let um = req.session.authorization.username;
+  let user_n = req.session.authorization.username;
+  let isbn = req.params.isbn;
+  let book = books[isbn];
+
+  if(book){
+    let reviewbody = req.body.review;
+    if(reviewbody){
+        book.reviews[`${user_n}`] = reviewbody;
+    }
+
+  }else {
+      res.send("Invalid ISBN")
+  }
 
   return res.status(300).json({message: `Yet to be implemented`});
 });
