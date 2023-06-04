@@ -54,22 +54,36 @@ regd_users.post("/login", (req,res) => {
 });
 
 // Add a book review
-regd_users.get("/auth/review/:isbn", (req, res) => {
-  let user_n = req.session.authorization.username;
-  let isbn = req.params.isbn;
-  let book = books[isbn];
-
-  if(book){
-    let reviewbody = req.body.review;
-    if(reviewbody){
-        book.reviews[`${user_n}`] = reviewbody;
+regd_users.put("/auth/review/:isbn", (req, res) => {
+    let user_n = req.session.authorization.username;
+    let isbn = req.params.isbn;
+    let book = books[isbn];
+  
+    if(book){
+      let reviewbody = req.body.review;
+      if(reviewbody){
+          book.reviews[`${user_n}`] = reviewbody;
+          res.send(book);
+      }
+  
+    }else {
+        res.send("Invalid ISBN");
     }
+  
+  });
 
-  }else {
-      res.send("Invalid ISBN")
-  }
 
-  return res.status(300).json({message: `Yet to be implemented`});
+regd_users.delete("/auth/review/:isbn", (req, res) => {
+    let isbn = req.params.isbn;
+    let user_n = req.session.authorization.username;
+    let reviewsofuser = books[isbn].reviews[user_n];
+
+    if(reviewsofuser){
+        delete books[isbn].reviews[user_n]
+        res.status(200).send("Review successfully deleted");
+    } else{
+
+    res.send("No reviews by the user");}
 });
 
 module.exports.authenticated = regd_users;
