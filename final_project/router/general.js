@@ -4,6 +4,7 @@ let isValid = require("./auth_users.js").isValid;
 let users = require("./auth_users.js").users;
 const public_users = express.Router();
 
+
 const doesExist = (username)=>{
     let userswithsamename = users.filter((user)=>{
       return user.username === username
@@ -31,8 +32,8 @@ public_users.post("/register", (req,res) => {
 });
 
 // Get the book list available in the shop
-public_users.get('/',function (req, res) {
-  return  res.send(JSON.stringify(books,null,4));
+public_users.get('/', async (req, res) => {
+  return  res.send(await JSON.stringify(books,null,4));
 });
 
 // Get book details based on ISBN

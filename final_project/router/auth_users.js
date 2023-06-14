@@ -63,7 +63,7 @@ regd_users.put("/auth/review/:isbn", (req, res) => {
       let reviewbody = req.body.review;
       if(reviewbody){
           book.reviews[`${user_n}`] = reviewbody;
-          res.send(book);
+          res.send(`Your review for book with ISBN ${isbn} has been added / updated`);
       }
   
     }else {
